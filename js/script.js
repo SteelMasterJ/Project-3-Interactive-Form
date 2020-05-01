@@ -167,7 +167,14 @@ function emailValidation() {
     console.log(emailValue);
     let atIndex = emailValue.indexOf('@');
     let periodLastIndex = emailValue.lastIndexOf('.');
-    if (atIndex >= 1 && periodLastIndex > (atIndex + 1)) {
+    if (emailValue.length <= 0) {
+        email.style.borderColor = 'red';
+        emailWarning.style.display = '';
+        emailWarning.style.color = 'red';
+        emailWarning.textContent = "Please input an email";
+        return false;
+    }
+    else if (atIndex >= 1 && periodLastIndex > (atIndex + 1)) {
         email.style.borderColor = 'white';
         emailWarning.style.display = 'none';
         return true;
