@@ -174,24 +174,34 @@ email.addEventListener('blur', (e) => {
     emailValidation();
   });
 
-    //checkbox validation function
+    //activities checkbox validation function
 function activitiesValidation() {
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            activities.style.borderColor = '';
+            // activities.removeChild(activitiesWarning);
+            activitiesWarning.style.display = 'none';
             return true;
-          }
-        let activitiesWarning = document.createElement('div');
-        activitiesWarning.textContent = 'Please select at least one activity';
-        activitiesWarning.style.color = 'red';
-        activities.appendChild(activitiesWarning);
-        return false;
+          } 
     }
+    activitiesWarning.style.display = '';
+    activitiesWarning.textContent = 'Please select at least one activity';
+    return false;
 }
 
+//created a warning variable to be displayed if no activiy is selected
+let activitiesWarning = document.createElement('div');
+activitiesWarning.style.color = 'red';
+activities.appendChild(activitiesWarning);
+
+//real time activities validation
+activities.addEventListener('click', (e) => {
+    activitiesValidation();
+});
+
 //function to validate credit card field
-function cardNumberValidation(number) {
-    if (payment[1].selected && /^\d{13,16}$/.test(number)) {
+function cardNumberValidation() {
+    let ccValue = ccNumber.value;
+    if (payment[1].selected && /^\d{13,16}$/.test(ccValue)) {
         ccNumber.style.borderColor = '';
         return true
     } else {
@@ -201,13 +211,12 @@ function cardNumberValidation(number) {
 }
 
 //real time credit card form validation event listener
-ccNumber.addEventListener('blur', (e) => {
-    cardNumberValidation(ccNumber.value);
-  });
+ccNumber.addEventListener('blur', cardNumberValidation);
 
 //function to validate zip code
-function zipValidation(zip) {
-    if (payment[1].selected && /^\d{5}$/.test(zip)) {
+function zipValidation() {
+    let zipValue = zipCode.value;
+    if (payment[1].selected && /^\d{5}$/.test(zipValue)) {
         zipCode.style.borderColor = '';
         return true
     } else {
@@ -217,13 +226,12 @@ function zipValidation(zip) {
 }
 
 //real time zip code form validation event listener
-zipCode.addEventListener('blur', (e) => {
-    zipValidation(zipCode.value);
-  });
+zipCode.addEventListener('blur', zipValidation);
 
 //function to validate CVV input
-function cvvValidation(cvvNumber) {
-    if (payment[1].selected && /^\d{3}$/.test(cvvNumber)) {
+function cvvValidation() {
+    let cvvValue = cvv.value;
+    if (payment[1].selected && /^\d{3}$/.test(cvvValue)) {
         cvv.style.borderColor = '';
         return true
     } else {
@@ -233,18 +241,47 @@ function cvvValidation(cvvNumber) {
 }
 
 //real time cvv validation event listener
-cvv.addEventListener('blur', (e) => {
-    cvvValidation(cvv.value);
-  });
+cvv.addEventListener('blur', cvvValidation);
+
+//removing cc real time validation if paypal or bitcoin are selected
+payment.addEventListener('change', (e) => {
+    if (payment[3].selected || payment[2].selected) {
+        cvv.removeEventListener('blur', cvvValidation);
+        zipCode.removeEventListener('blur', zipValidation);
+        ccNumber.removeEventListener('blur', cardNumberValidation);
+        console.log('event remover for bitcoin/ paypal is working');
+    }
+    if (payment[1].selected) {
+        cvv.addEventListener('blur', cvvValidation);
+        zipCode.addEventListener('blur', zipValidation);
+        ccNumber.addEventListener('blur', cardNumberValidation);
+        console.log('event adder for cc is working');
+    }
+});
 
 //form submission validation event listener
 button.addEventListener('click', (e) => {
     console.log('form submission event listener is functional');
-    e.preventDefault();
-    nameValidation();
-    emailValidation();
-    activitiesValidation();
-    cardNumberValidation(ccNumber.value);
-    zipValidation(zipCode.value);
-    cvvValidation(cvv.value);
+    //e.preventDefault();
+    // nameValidation();
+    // emailValidation();
+    // activitiesValidation();
+    // cardNumberValidation(ccNumber.value);
+    // zipValidation(zipCode.value);
+    // cvvValidation(cvv.value);
+    if (!nameValidation()) {
+        e.preventDefault();
+        console.log('name validation is working');
+    }
+    if (!emailValidation()) {
+        e.preventDefault();
+    }
+    if (!activitiesValidation()) {
+        e.preventDefault();
+    }
+    if (payment[1].selected) {
+        if (!cardNumberValidation(ccNumber.value) && !zipValidation(zipCode.value) && !cvvValidation(cvv.value)) {
+            e.preventDefault();
+        }
+    }
 });
