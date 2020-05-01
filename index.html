@@ -20,9 +20,11 @@
         <legend>Basic Info</legend>
         
         <label for="name">Name:</label>
+        <div id="name-warning"></div> 
         <input type="text" id="name" name="user-name">
         
         <label for="mail">Email:</label>
+        <div id="email-warning"></div> 
         <input type="email" id="mail" name="user-email">
         
         <label for="title">Job Role</label>
@@ -103,7 +105,7 @@
             <input type="checkbox" name="npm" data-day-and-time="Wednesday 1pm-4pm" data-cost="100"> 
             npm Workshop — Wednesday 1pm-4pm, $100
           </label>
-          <div id="total-cost">$</div>     	
+          <div id="total-cost"></div>     	
       </fieldset>
       <fieldset>
         <legend>Payment Info</legend>
@@ -120,17 +122,20 @@
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
-        	  <input id="cc-num" name="user-cc-num" type="text">
+            <input id="cc-num" name="user-cc-num" type="text">
+            <div id="cc-warning"></div> 
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
             <input id="zip" name="user-zip" type="text"> 
+            <div id="zip-warning"></div> 
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
-            <input id="cvv" name="user-cvv" type="text"> 
+            <input id="cvv" name="user-cvv" type="text">
+            <div id="cvv-warning"></div> 
           </div>
 
           <label for="exp-month">Expiration Date:</label>

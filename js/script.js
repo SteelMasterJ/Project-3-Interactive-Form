@@ -142,12 +142,19 @@ function nameValidation() {
     console.log(nameValue);
     if (nameValue.length > 0) {
         name.style.borderColor = 'white';
+        nameWarning.style.display = 'none';
         return true;
     } else {
         name.style.borderColor = 'red';
+        nameWarning.style.display = '';
+        nameWarning.style.color = 'red';
+        nameWarning.textContent = "Please input your name";
         return false;
     }
 }
+
+//assigning variable to name warning label div
+let nameWarning = document.getElementById('name-warning');
 
 //real time validation event listener for Name input
 name.addEventListener('blur', (e) => {
@@ -162,12 +169,19 @@ function emailValidation() {
     let periodLastIndex = emailValue.lastIndexOf('.');
     if (atIndex >= 1 && periodLastIndex > (atIndex + 1)) {
         email.style.borderColor = 'white';
+        emailWarning.style.display = 'none';
         return true;
       } else {
         email.style.borderColor = 'red';
+        emailWarning.style.display = '';
+        emailWarning.style.color = 'red';
+        emailWarning.textContent = "Please input your email in a valid format (Joey@example.com)";
         return false;
       }
 }
+
+//assigning variable to email warning label div
+let emailWarning = document.getElementById('email-warning');
 
     //real time validation event listener for Email input
 email.addEventListener('blur', (e) => {
@@ -198,17 +212,25 @@ activities.addEventListener('click', (e) => {
     activitiesValidation();
 });
 
+
 //function to validate credit card field
 function cardNumberValidation() {
     let ccValue = ccNumber.value;
     if (payment[1].selected && /^\d{13,16}$/.test(ccValue)) {
         ccNumber.style.borderColor = '';
+        ccWarning.style.display = 'none';
         return true
     } else {
         ccNumber.style.borderColor = 'red';
+        ccWarning.style.display = '';
+        ccWarning.style.color = 'red';
+        ccWarning.textContent = "Credit Card numbers must be between 13-16 digits";
         return false;
     }
 }
+
+//assigning variable to cc warning label div
+let ccWarning = document.getElementById('cc-warning');
 
 //real time credit card form validation event listener
 ccNumber.addEventListener('blur', cardNumberValidation);
@@ -218,12 +240,19 @@ function zipValidation() {
     let zipValue = zipCode.value;
     if (payment[1].selected && /^\d{5}$/.test(zipValue)) {
         zipCode.style.borderColor = '';
+        zipWarning.style.display = 'none';
         return true
     } else {
         zipCode.style.borderColor = 'red';
+        zipWarning.style.display = '';
+        zipWarning.style.color = 'red';
+        zipWarning.textContent = "Zip Codes must be 5 digits";
         return false;
     }
 }
+
+//assigning variable to zip warning label div
+let zipWarning = document.getElementById('zip-warning');
 
 //real time zip code form validation event listener
 zipCode.addEventListener('blur', zipValidation);
@@ -233,12 +262,19 @@ function cvvValidation() {
     let cvvValue = cvv.value;
     if (payment[1].selected && /^\d{3}$/.test(cvvValue)) {
         cvv.style.borderColor = '';
+        cvvWarning.style.display = 'none';
         return true
     } else {
         cvv.style.borderColor = 'red';
+        cvvWarning.style.display = '';
+        cvvWarning.style.color = 'red';
+        cvvWarning.textContent = "CVV must be 3 digits";
         return false;
     }
 }
+
+//assigning variable to cvv warning label div
+let cvvWarning = document.getElementById('cvv-warning');
 
 //real time cvv validation event listener
 cvv.addEventListener('blur', cvvValidation);
