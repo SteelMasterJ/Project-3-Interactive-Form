@@ -167,7 +167,7 @@ function emailValidation() {
     console.log(emailValue);
     let atIndex = emailValue.indexOf('@');
     let periodLastIndex = emailValue.lastIndexOf('.');
-    if (emailValue.length <= 0) {
+    if (emailValue.length <= 3) {
         email.style.borderColor = 'red';
         emailWarning.style.display = '';
         emailWarning.style.color = 'red';
@@ -236,11 +236,29 @@ function cardNumberValidation() {
     }
 }
 
+//function to real time validate if and non number characters are input into the cc number field
+function cardDigitValidation() {
+    let ccValue = ccNumber.value;
+    if (payment[1].selected && /\D/g.test(ccValue)) {
+        ccNumber.style.borderColor = 'red';
+        ccWarning.style.display = '';
+        ccWarning.style.color = 'red';
+        ccWarning.textContent = "Credit Card should not include any letters or special characters";
+        
+    } else {
+        ccNumber.style.borderColor = '';
+        ccWarning.style.display = 'none';
+    }
+}
+
 //assigning variable to cc warning label div
 let ccWarning = document.getElementById('cc-warning');
 
 //real time credit card form validation event listener
-ccNumber.addEventListener('blur', cardNumberValidation);
+ccNumber.addEventListener('keyup', cardNumberValidation);
+
+//real time cc digit form validation
+ccNumber.addEventListener('keyup', cardDigitValidation);
 
 //function to validate zip code
 function zipValidation() {
