@@ -255,7 +255,7 @@ function cardDigitValidation() {
 let ccWarning = document.getElementById('cc-warning');
 
 //real time credit card form validation event listener
-ccNumber.addEventListener('keyup', cardNumberValidation);
+ccNumber.addEventListener('blur', cardNumberValidation);
 
 //real time cc digit form validation
 ccNumber.addEventListener('keyup', cardDigitValidation);
@@ -341,7 +341,7 @@ button.addEventListener('click', (e) => {
         e.preventDefault();
     }
     if (payment[1].selected) {
-        if (!cardNumberValidation(ccNumber.value) && !zipValidation(zipCode.value) && !cvvValidation(cvv.value)) {
+        if (!cardNumberValidation() || !zipValidation() || !cvvValidation()) {
             e.preventDefault();
         }
     }
